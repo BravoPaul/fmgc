@@ -660,60 +660,121 @@
 
     /* Responsive */
 
-    @media (max-width: 960px) {
-      .hero-inner {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .hero-right {
-        order: -1;
-      }
-      .cards-grid-3,
-      .scenario-grid,
-      .cases-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .cooperation-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .contact-inner {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .nav-menu {
-        display: none; /* 简化：移动端不展示导航菜单，有需要可以后续加折叠菜单 */
-      }
-    }
+    /* 平板 & 小屏电脑优化 */
+@media (max-width: 960px) {
+  .hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+  .hero-right {
+    order: -1; /* 图在上，文字在下 */
+  }
 
-    @media (max-width: 640px) {
-      header {
-        position: static;
-      }
-      .hero {
-        padding-top: 2rem;
-      }
-      section {
-        padding: 2.5rem 1rem;
-      }
-      .cards-grid-3,
-      .scenario-grid,
-      .cases-grid,
-      .cooperation-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .hero-card {
-        padding: 1.25rem;
-      }
-      .nav {
-        padding-inline: 0.9rem;
-      }
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .back-to-top {
-        right: 0.8rem;
-        bottom: 0.8rem;
-      }
-    }
+  .cards-grid-3,
+  .scenario-grid,
+  .cases-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cooperation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .contact-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nav-menu {
+    display: none; /* 简化：移动端不展示导航菜单 */
+  }
+
+  /* 顶部右侧两个按钮稍微缩小一点 */
+  .nav-cta {
+    gap: 0.5rem;
+  }
+  .nav-cta .btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* 手机端优化 */
+@media (max-width: 640px) {
+  header {
+    position: static;
+  }
+
+  .nav {
+    padding-inline: 0.8rem;
+  }
+
+  .hero {
+    padding-top: 2rem;
+    padding-bottom: 2.2rem;
+  }
+
+  section {
+    padding: 2.2rem 1rem;
+  }
+
+  /* Hero 区域整体居中，更紧凑 */
+  .hero-left,
+  .hero-subtitle,
+  .hero-tags,
+  .hero-actions,
+  .hero-note {
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 1.9rem;
+  }
+
+  .hero-tags {
+    justify-content: center;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  /* 按钮做成大号、居中、间距更友好 */
+  .hero-actions .btn {
+    min-width: 180px;
+    justify-content: center;
+  }
+
+  .hero-card {
+    padding: 1.1rem 1.1rem;
+  }
+
+  .metric-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cards-grid-3,
+  .scenario-grid,
+  .cases-grid,
+  .cooperation-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .back-to-top {
+    right: 0.8rem;
+    bottom: 0.8rem;
+  }
+
+  .back-to-top a {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+  }
+}
+
   </style>
 </head>
 
