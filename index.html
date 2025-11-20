@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>数享科技 | 零售渠道智能洞察服务</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="数享科技专注零售渠道数据治理与智能洞察，自研售点数据库与数据治理标准，融合大数据与AI模型，为企业提供从数据管理到渠道洞察的一体化服务。" />
+
+  <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-dark: #1e40af;
+      --primary-light: #dbeafe;
+      --bg: #f5f7fb;
+      --text: #111827;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --border: #e5e7eb;
+      --accent: #0ea5e9;
+      --max-width: 1120px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 6px 20px rgba(15, 23, 42, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+      background: radial-gradient(circle at top left, #e0f2fe 0, #f9fafb 55%, #eff6ff 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Layout */
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(248, 250, 252, 0.92);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.7);
+    }
+
+    .nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 20% 20%, #60a5fa, #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #eff6ff;
+      font-weight: 700;
+      font-size: 18px;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+    }
+
+    .logo-text-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .nav-menu a {
+      position: relative;
+      padding-bottom: 4px;
+      white-space: nowrap;
+    }
+
+    .nav-menu a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.2s ease;
+    }
+
+    .nav-menu a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.4rem;   /* 按钮变大 */
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.95rem;         /* 字体更大 */
+  white-space: nowrap;        /* 禁止换行 */
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 0.45rem;
+  min-width: 130px;           /* 强制宽度 */
+}
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #f9fafb;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 32px rgba(37, 99, 235, 0.45);
+      filter: brightness(1.02);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary-dark);
+      border-color: rgba(148, 163, 184, 0.7);
+    }
+
+    .btn-outline:hover {
+      background: rgba(219, 234, 254, 0.7);
+      border-color: var(--primary);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    section {
+      padding: 3.5rem 1rem;
+    }
+
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.03em;
+    }
+
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 640px;
+      margin-bottom: 2rem;
+    }
+
+    /* Hero */
+
+    .hero {
+      padding-top: 3.5rem;
+      padding-bottom: 3.5rem;
+    }
+
+    .hero-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      color: var(--primary-dark);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hero-eyebrow-badge {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #facc15, #ea580c);
+      box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.28);
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title span.highlight {
+      background: linear-gradient(120deg, #1d4ed8, #0ea5e9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: #4b5563;
+      max-width: 520px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(191, 219, 254, 0.7);
+      color: #1d4ed8;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      white-space: nowrap;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-right {
+      position: relative;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    .hero-card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .hero-card-chip {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      white-space: nowrap;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .metric-item {
+      padding: 0.6rem 0.7rem;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+
+    .metric-label {
+      color: #6b7280;
+      margin-bottom: 0.1rem;
+    }
+
+    .metric-value {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .hero-card-footer {
+      font-size: 0.8rem;
+      color: #6b7280;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.25rem;
+    }
+
+    .hero-badge {
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #60a5fa, #2563eb);
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    /* Cards & grids */
+
+    .cards-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    .card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .card-tagline {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .card-body {
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    .card-body ul {
+      padding-left: 1.1rem;
+      margin-top: 0.4rem;
+    }
+
+    .card-body li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* Data & scenarios */
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      display: inline-block;
+      margin-right: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    .scenario-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 1.3rem;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: var(--shadow-sm);
+      font-size: 0.85rem;
+    }
+
+    .scenario-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .scenario-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .scenario-card ul {
+      padding-left: 1.1rem;
+    }
+
+    .scenario-card li {
+      margin-bottom: 0.25rem;
+    }
+
+    /* Cases */
+
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.3rem;
+    }
+
+    .case-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 1.3rem;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: var(--shadow-sm);
+      font-size: 0.85rem;
+    }
+
+    .case-tag {
+      font-size: 0.75rem;
+      color: var(--primary-dark);
+      background: #eff6ff;
+      border-radius: 999px;
+      padding: 0.2rem 0.6rem;
+      display: inline-block;
+      margin-bottom: 0.3rem;
+    }
+
+    .case-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .case-card ul {
+      padding-left: 1.1rem;
+    }
+
+    .case-card li {
+      margin-bottom: 0.25rem;
+    }
+
+    /* Cooperation */
+
+    .cooperation-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .coop-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1rem;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: var(--shadow-sm);
+      font-size: 0.82rem;
+    }
+
+    .coop-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .coop-desc {
+      color: #4b5563;
+    }
+
+    /* Footer & contact */
+
+    .contact-section {
+      background: radial-gradient(circle at top, #dbeafe 0, #eff6ff 60%, #e5e7eb 100%);
+      padding-bottom: 3rem;
+    }
+
+    .contact-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .contact-card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 20px;
+      padding: 1.5rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      font-size: 0.88rem;
+    }
+
+    .contact-list {
+      list-style: none;
+      margin-top: 0.5rem;
+    }
+
+    .contact-list li {
+      margin-bottom: 0.35rem;
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .contact-label {
+      color: var(--muted);
+      min-width: 3rem;
+    }
+
+    .contact-highlight {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(209, 213, 219, 0.9);
+      padding: 1rem 1rem 1.4rem;
+      background: rgba(15, 23, 42, 0.98);
+      color: #e5e7eb;
+      font-size: 0.78rem;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .footer-links a {
+      color: #9ca3af;
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 10;
+    }
+
+    .back-to-top a {
+      display: inline-flex;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(248, 250, 252, 0.95);
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #4b5563;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+    }
+
+    .back-to-top a:hover {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    /* Responsive */
+
+    /* 平板 & 小屏电脑优化 */
+@media (max-width: 960px) {
+  .hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+  .hero-right {
+    order: -1; /* 图在上，文字在下 */
+  }
+
+  .cards-grid-3,
+  .scenario-grid,
+  .cases-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cooperation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .contact-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nav-menu {
+    display: none; /* 简化：移动端不展示导航菜单 */
+  }
+
+  /* 顶部右侧两个按钮稍微缩小一点 */
+  .nav-cta {
+    gap: 0.5rem;
+  }
+  .nav-cta .btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* 手机端优化 */
+@media (max-width: 640px) {
+  header {
+    position: static;
+  }
+
+  .nav {
+    padding-inline: 0.8rem;
+  }
+
+  .hero {
+    padding-top: 2rem;
+    padding-bottom: 2.2rem;
+  }
+
+  section {
+    padding: 2.2rem 1rem;
+  }
+
+  /* Hero 区域整体居中，更紧凑 */
+  .hero-left,
+  .hero-subtitle,
+  .hero-tags,
+  .hero-actions,
+  .hero-note {
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 1.9rem;
+  }
+
+  .hero-tags {
+    justify-content: center;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  /* 按钮做成大号、居中、间距更友好 */
+  .hero-actions .btn {
+    min-width: 180px;
+    justify-content: center;
+  }
+
+  .hero-card {
+    padding: 1.1rem 1.1rem;
+  }
+
+  .metric-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cards-grid-3,
+  .scenario-grid,
+  .cases-grid,
+  .cooperation-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .back-to-top {
+    right: 0.8rem;
+    bottom: 0.8rem;
+  }
+
+  .back-to-top a {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+  }
+}
+
+  </style>
+</head>
+
+<body id="top">
+  <div class="page">
+    <!-- Header -->
+    <header>
+      <div class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">享</div>
+          <div class="logo-text">
+            <div class="logo-text-main">数享科技</div>
+            <div class="logo-text-sub">Retail Channel Intelligence</div>
+          </div>
+        </div>
+        <nav class="nav-menu">
+          <a href="#solutions">解决方案</a>
+          <a href="#data">数据能力</a>
+          <a href="#governance">数据治理标准</a>
+          <a href="#scenarios">业务场景</a>
+          <a href="#cases">成功案例</a>
+          <a href="#cooperation">合作方式</a>
+          <a href="#contact">关于我们</a>
+        </nav>
+        <div class="nav-cta">
+          <button class="btn btn-outline" onclick="window.location.href='#contact'">商务合作</button>
+          <button class="btn btn-primary" onclick="window.location.href='#contact'">
+            预约演示
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="hero-left">
+            <div class="hero-eyebrow">
+              <span class="hero-eyebrow-badge"></span>
+              零售渠道智能洞察服务
+            </div>
+            <h1 class="hero-title">
+              掌握渠道市场，<br />
+              决胜 <span class="highlight">数据时代</span>
+            </h1>
+            <p class="hero-subtitle">
+              数享科技专注零售渠道数据治理与智能洞察，自研售点数据库与行业数据治理标准，
+              融合大数据与AI模型，帮助企业从“数据管理”迈向“渠道增长”。
+            </p>
+
+            <div class="hero-tags">
+              <span class="tag">自研零售售点数据库系统</span>
+              <span class="tag">行业渠道数据治理标准制定者</span>
+              <span class="tag">覆盖 300+ 城市 · 1300万+ 门店</span>
+              <span class="tag">多源数据融合 · 全渠道洞察</span>
+            </div>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary" onclick="window.location.href='#contact'">
+                立即沟通方案
+              </button>
+              <button class="btn btn-outline" onclick="window.location.href='#solutions'">
+                查看典型场景
+              </button>
+            </div>
+            <div class="hero-note">
+              支持在线 API 接入、本地化部署与定制项目合作。
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="hero-card" aria-label="渠道数据概览">
+              <div class="hero-card-header">
+                <div>
+                  <div class="hero-card-title">零售渠道数据底座概览</div>
+                  <div class="card-tagline" style="font-size:0.78rem; color:#6b7280;">
+                    全量售点 × 多源数据 × 标准治理
+                  </div>
+                </div>
+                <div class="hero-card-chip">T+1 更新</div>
+              </div>
+
+              <div class="metric-grid">
+                <div class="metric-item">
+                  <div class="metric-label">覆盖城市</div>
+                  <div class="metric-value">300+ 城市</div>
+                </div>
+                <div class="metric-item">
+                  <div class="metric-label">合作渠道商</div>
+                  <div class="metric-value">10万+ 家</div>
+                </div>
+                <div class="metric-item">
+                  <div class="metric-label">门店规模</div>
+                  <div class="metric-value">1300万+ 门店</div>
+                </div>
+                <div class="metric-item">
+                  <div class="metric-label">SKU / 品类</div>
+                  <div class="metric-value">80万+ SKU</div>
+                </div>
+              </div>
+
+              <div class="metric-grid" style="margin-bottom: 0.5rem;">
+                <div class="metric-item">
+                  <div class="metric-label">渠道类型</div>
+                  <div class="metric-value">15+ 类型</div>
+                </div>
+                <div class="metric-item">
+                  <div class="metric-label">数据形态</div>
+                  <div class="metric-value">采销量 / O2O / POI 等</div>
+                </div>
+              </div>
+
+              <div class="hero-card-footer">
+                <span>打通“门店-商品-订单”，让每一笔投入可衡量、可优化。</span>
+                <span style="white-space:nowrap;">→ 渠道增长决策引擎</span>
+              </div>
+
+              <div class="hero-badge"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Solutions: 两大核心能力 -->
+      <section id="solutions">
+        <div class="section-inner">
+          <h2 class="section-title">两大核心能力 · 从数据到底层再到洞察</h2>
+          <p class="section-subtitle">
+            从售点数据库与数据治理出发，构建企业渠道数字化底座；再结合行业大数据与模型能力，实现多业务场景下的零售渠道智能洞察。
+          </p>
+
+          <div class="cards-grid-3">
+            <article class="card">
+              <div class="card-header">
+                <div class="card-title">渠道数据管理</div>
+                <div class="card-tagline">构建企业标准售点库与数据中台</div>
+              </div>
+              <div class="card-body">
+                <ul>
+                  <li>整合企业自有数据、行业采买数据与平台数据，构建统一售点基础库与标准库。</li>
+                  <li>统一门店ID体系，解决重复、虚假、口径不一致等数据问题。</li>
+                  <li>搭建售点数据库平台，打通数据接入、清洗、加工、建模与应用全流程。</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-header">
+                <div class="card-title">渠道数据洞察</div>
+                <div class="card-tagline">把数据变成可行动的决策建议</div>
+              </div>
+              <div class="card-body">
+                <ul>
+                  <li>基于行业大数据与算法模型，进行售点拓展、投资优化、铺货策略与价盘分析。</li>
+                  <li>支持 T+1 数据更新，多维度监测市场容量与渠道趋势。</li>
+                  <li>按区域、渠道、经销商等不同视角输出可视化洞察与门店清单。</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-header">
+                <div class="card-title">模型与标准体系</div>
+                <div class="card-tagline">数据治理标准 + 行业模型组合拳</div>
+              </div>
+              <div class="card-body">
+                <ul>
+                  <li>售点数据 3 要素 + 商品数据 3 要素 + 订单数据 4 要素的“3-3-4”数据治理体系。</li>
+                  <li>支持渠道分类识别、开闭店识别、SKU 适销、投资倾向与 Uplift 分析等模型能力。</li>
+                  <li>沉淀可复用的数据标准和算法组件，支撑企业持续迭代与规模化应用。</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Data capability -->
+      <section id="data" style="background: var(--bg);">
+        <div class="section-inner">
+          <h2 class="section-title">数据能力 · 全量覆盖、多源融合</h2>
+          <p class="section-subtitle">
+            以全国零售渠道售点为基础，融合经销商采销量、地图POI、到家到店 O2O 等多源数据，
+            为不同业务线提供统一而又灵活的数据支撑。
+          </p>
+
+          <div class="card" style="margin-bottom:1.5rem;">
+            <div class="card-header">
+              <div class="card-title">数据覆盖范围</div>
+              <div class="card-tagline">多维度、多渠道的行业视角</div>
+            </div>
+            <div class="card-body">
+              <div class="chips-row">
+                <span class="pill">300+ 城市</span>
+                <span class="pill">10万+ 渠道商</span>
+                <span class="pill">1300万+ 门店</span>
+                <span class="pill">30万+ SKU / 品类</span>
+                <span class="pill">15+ 渠道类型</span>
+                <span class="pill">T+1 数据更新</span>
+              </div>
+              <p style="margin-top:0.75rem;">
+                支持现代渠道、传统渠道、电商渠道、O2O 渠道等多种渠道形态，覆盖门店、商品、订单等关键数据实体，
+                帮助企业在统一视图下进行跨渠道对比与布局。
+              </p>
+            </div>
+          </div>
+
+          <div class="cards-grid-3">
+            <article class="card">
+              <div class="card-header">
+                <div class="card-title">售点采销量数据</div>
+                <div class="card-tagline">看清终端真实销售表现</div>
+              </div>
+              <div class="card-body">
+                <ul>
+                  <li>来源于经销商、终端样本门店等多方渠道。</li>
+                  <li>支持按商品、门店、时间维度进行销售分析与趋势监控。</li>
+                  <li>可结合企业内部订单数据进行交叉验证与补充。</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-header">
+                <div class="card-title">POI 与 O2O 视角数据</div>
+                <div class="card-tagline">结合线上与线下的渠道表现</div>
+              </div>
+              <div class="card-body">
+                <ul>
+                  <li>利用地图 POI 数据丰富门店基础属性。</li>
+                  <li>结合到家/到店 O2O 平台数据，洞察渠道结构与线上渗透情况。</li>
+                  <li>辅助识别开闭店、品牌陈列与活动执行情况。</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-header">
+                <div class="card-title">其他行业数据</div>
+                <div class="card-tagline">多场景拓展，支撑更多分析需求</div>
+              </div>
+              <div class="card-body">
+                <ul>
+                  <li>可接入人口、商圈、收入水平等宏观数据，评估市场容量与增长潜力。</li>
+                  <li>支持客户自身数据与三方数据融合，构建企业独有的数据资产。</li>
+                  <li>通过数据标准化与标签化，为后续模型与应用场景提供统一特征底座。</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Governance -->
+      <section id="governance">
+        <div class="section-inner">
+          <h2 class="section-title">数据治理标准 · 售点、商品与订单的统一语言</h2>
+          <p class="section-subtitle">
+            通过业界实践验证的“3-3-4”数据治理体系，对售点、商品与订单进行标准化管理，
+            提升数据的准确性、一致性与可用性。
+          </p>
+
+          <div class="cards-grid-3">
+            <article class="card">
+              <div class="card-header">
+                <div class="card-title">售点数据 3 要素</div>
+              </div>
+              <div class="card-body">
+                <ul>
+                  <li>完整地址：统一地址标准与解析规则，支持地理编码与区域聚合。</li>
+                  <li>准确门店名称：去重、纠错与品牌/连锁归属识别。</li>
+                  <li>统一门店ID体系：打通多系统、多数据源中的门店标识。</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-header">
+                <div class="card-title">商品数据 3 要素</div>
+              </div>
+              <div class="card-body">
+                <ul>
+                  <li>标准名称：统一品名规范，支持系列与单品归类。</li>
+                  <li>准确条码：条码清洗与映射，解决多条码、错条码问题。</li>
+                  <li>丰富关键属性：品牌、品类、规格、包装形式等标签化管理。</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-header">
+                <div class="card-title">订单数据 4 要素</div>
+              </div>
+              <div class="card-body">
+                <ul>
+                  <li>门店：通过统一ID关联到标准售点库。</li>
+                  <li>商品：与商品标准库一致关联。</li>
+                  <li>价格：标准化价格口径，可监测价盘与折扣情况。</li>
+                  <li>销量：保证销量口径统一，支持不同粒度统计与对比。</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scenarios -->
+      <section id="scenarios" style="background: var(--bg);">
+        <div class="section-inner">
+          <h2 class="section-title">业务场景 · 让每一次投入更有效</h2>
+          <p class="section-subtitle">
+            基于渠道数据底座与模型能力，数享科技为企业提供多场景的零售渠道解决方案，
+            帮助品牌看清渠道、选对门店、花好每一笔钱。
+          </p>
+
+          <div class="scenario-grid">
+            <article class="scenario-card">
+              <div class="scenario-title">售点拓展与高价值门店挖掘</div>
+              <div class="scenario-sub">从“看不见机会”到“精准锁定黄金门店”。</div>
+              <ul>
+                <li>在全量售点范围内识别企业未覆盖或低覆盖的重点门店。</li>
+                <li>按区域、渠道类型、更新频次组合，挖掘高潜力售点。</li>
+                <li>输出拓展清单与优先级，为终端拓展与业务团队提供落地指引。</li>
+              </ul>
+            </article>
+
+            <article class="scenario-card">
+              <div class="scenario-title">渠道精细化投资与 ROI 管理</div>
+              <div class="scenario-sub">把每一笔渠道投入变成可衡量、可优化的资产。</div>
+              <ul>
+                <li>基于历史投资与销量数据构建门店投资样本。</li>
+                <li>融合行业大数据进行特征建模与倾向得分分析。</li>
+                <li>形成门店黑/白名单，设计千店千面的门店投资策略。</li>
+              </ul>
+            </article>
+
+            <article class="scenario-card">
+              <div class="scenario-title">新品与高端品铺货策略</div>
+              <div class="scenario-sub">找到“最适合卖这款商品的那批门店”。</div>
+              <ul>
+                <li>结合门店销售特征、客群画像与竞品表现构建适销模型。</li>
+                <li>为新品、高端品分别评估目标受众与适配门店类型。</li>
+                <li>生成区域/门店优先级与铺货节奏建议，提高上架成功率与动销效率。</li>
+              </ul>
+            </article>
+
+            <article class="scenario-card">
+              <div class="scenario-title">渠道价盘与利润趋势分析</div>
+              <div class="scenario-sub">看清价格体系，守住利润空间。</div>
+              <ul>
+                <li>按区域与渠道监测采购价格及其变动趋势。</li>
+                <li>分析直采率、价格传导链路及促销活动效果。</li>
+                <li>结合进/出货数据评估经销商利润情况与渠道溢价水平。</li>
+              </ul>
+            </article>
+
+            <article class="scenario-card">
+              <div class="scenario-title">市场容量与份额洞察</div>
+              <div class="scenario-sub">站在更大的棋盘上做决策。</div>
+              <ul>
+                <li>评估不同区域、渠道的容量与增长潜力。</li>
+                <li>比较商品在各渠道中的份额与价位分布。</li>
+                <li>支持同比、环比分析，及时捕捉结构变化与机会区域。</li>
+              </ul>
+            </article>
+
+            <article class="scenario-card">
+              <div class="scenario-title">渠道执行与活动复盘</div>
+              <div class="scenario-sub">用数据验证投入成效。</div>
+              <ul>
+                <li>监测活动期间的销量拉动效果与门店执行情况。</li>
+                <li>区别对待不同门店类型，总结可复制的成功模式。</li>
+                <li>支持按经销商、门店、渠道多维度进行精细复盘与调整。</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cases -->
+      <section id="cases">
+        <div class="section-inner">
+          <h2 class="section-title">成功案例 · 与头部品牌共同打磨的方案</h2>
+          <p class="section-subtitle">
+            数享科技与多家头部品牌与渠道伙伴合作，在实际业务场景中持续打磨数据治理与渠道洞察能力，
+            形成可复用、可复制的行业解决方案。
+          </p>
+
+          <div class="cases-grid">
+            <article class="case-card">
+              <div class="case-tag">售点数据库中台</div>
+              <div class="case-title">某头部休食品牌：构建统一售点数据库系统</div>
+              <ul>
+                <li>整合多业务线与多系统的门店数据，建立统一售点数据库中台。</li>
+                <li>搭建覆盖原始数据、标签数据与应用数据的标准表结构。</li>
+                <li>支撑终端拓展、客户投资等项目的数据分析需求，成为企业统一数据底座。</li>
+              </ul>
+            </article>
+
+            <article class="case-card">
+              <div class="case-tag">数据质量治理</div>
+              <div class="case-title">某饮品品牌：存量数据全面清洗与标准化</div>
+              <ul>
+                <li>针对虚假、重复、无效等问题进行系统化的数据清洗治理。</li>
+                <li>建立统一门店ID与商品标准库，解决多套编码并存带来的治理难题。</li>
+                <li>大幅提升数据可用度，为后续模型与业务分析提供可靠基础。</li>
+              </ul>
+            </article>
+
+            <article class="case-card">
+              <div class="case-tag">渠道精细化投资</div>
+              <div class="case-title">某国际啤酒品牌：门店投资优化与黑/白名单策略</div>
+              <ul>
+                <li>基于历史投入与销量构建门店投资数据样本。</li>
+                <li>利用 Uplift 模型识别具有增量潜力的重点门店。</li>
+                <li>通过黑/白名单策略过滤大量无效投入门店，显著提升整体投资 ROI。</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cooperation -->
+      <section id="cooperation" style="background: var(--bg);">
+        <div class="section-inner">
+          <h2 class="section-title">合作方式 · 灵活接入，快速落地</h2>
+          <p class="section-subtitle">
+            不同数字化阶段的企业可以选择不同的合作方式：从简单的数据报告，到深度的标准体系与系统建设，
+            再到本地化部署与联合创新。
+          </p>
+
+          <div class="cooperation-grid">
+            <article class="coop-card">
+              <div class="coop-title">在线 API 对接</div>
+              <div class="coop-desc">
+                将数享的数据与模型能力以 API 形式集成至企业现有系统
+                （如 SFA、DMS、ERP、BI 平台），快速验证价值并支撑日常业务使用。
+              </div>
+            </article>
+
+            <article class="coop-card">
+              <div class="coop-title">离线数据与报告交付</div>
+              <div class="coop-desc">
+                按项目周期交付数据集与洞察分析报告，满足渠道规划、投资复盘、品类研究等专项需求。
+              </div>
+            </article>
+
+            <article class="coop-card">
+              <div class="coop-title">本地化部署方案</div>
+              <div class="coop-desc">
+                将数据平台与模型服务部署在企业自有环境或指定云环境中，
+                兼顾性能、可控性与数据安全合规要求。
+              </div>
+            </article>
+
+            <article class="coop-card">
+              <div class="coop-title">定制项目与联合创新</div>
+              <div class="coop-desc">
+                针对企业特定问题开展联合项目，包括数据治理体系建设、行业模型开发、
+                渠道增长引擎搭建等，沉淀适配企业长期发展的数字化能力。
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact & About -->
+      <section id="contact" class="contact-section">
+        <div class="section-inner contact-inner">
+          <div>
+            <h2 class="section-title">关于数享科技</h2>
+            <p class="section-subtitle">
+              数享科技专注零售渠道数智化服务，自研售点数据库与行业数据治理标准，
+              将数据能力、算法模型与业务场景深度融合，帮助企业构建长期可持续的渠道竞争力。
+            </p>
+
+            <div class="card contact-card">
+              <div style="font-weight:600; margin-bottom:0.5rem;">商务合作 / 预约演示</div>
+              <p>
+                如果你正在关注渠道拓展、终端投资、价盘管理、新品铺货或整体渠道数字化，
+                欢迎与我们联系，获取更详尽的解决方案介绍。
+              </p>
+              <ul class="contact-list">
+                <li>
+                  <span class="contact-label">电话</span>
+                  <span>13520483898</span>
+                </li>
+                <li>
+                  <span class="contact-label">邮箱</span>
+                  <span>sunjing@datapartage.com</span>
+                </li>
+                <li>
+                  <span class="contact-label">地址</span>
+                  <span>北京市 · 海淀区</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card contact-card">
+            <div style="font-weight:600; margin-bottom:0.5rem;">为什么选择数享科技？</div>
+            <ul class="contact-list">
+              <li>· 深耕零售渠道场景，理解品牌方与经销商的真实业务诉求。</li>
+              <li>· 自研售点数据库与数据治理体系，形成可复用的行业标准与方法论。</li>
+              <li>· 结合大数据与 AI 模型，将数据能力转化为可执行的业务决策建议。</li>
+              <li>· 支持 API 对接、本地部署与定制项目合作，灵活适配不同发展阶段。</li>
+            </ul>
+            <p class="contact-highlight">
+              从“数据看不清”，到“渠道算得清”，再到“决策有抓手”，
+              数享科技希望成为你在零售渠道数智化道路上的长期伙伴。
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>
+          © 2017–2025 北京数享科技有限公司 · 保留所有权利
+        </div>
+        <div class="footer-links">
+          <a href="#top">首页</a>
+          <a href="#solutions">解决方案</a>
+          <a href="#cases">成功案例</a>
+          <a href="#contact">联系我们</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to top -->
+    <div class="back-to-top">
+      <a href="#top" aria-label="回到顶部">↑</a>
+    </div>
+  </div>
+</body>
+</html>
